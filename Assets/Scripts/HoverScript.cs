@@ -32,6 +32,9 @@ public class HoverScript : MonoBehaviour
 
         // set default color of hoverShape to yellow (option = 1)
         changeHoverColor(1);
+
+        // set hoverShape as inactive on start, we don't need it right away
+        hoverShape.SetActive(false);
     }
 
     // Update is called once per frame
@@ -50,6 +53,9 @@ public class HoverScript : MonoBehaviour
             {
                 if (hitInfo.transform.name.Equals("Base"))
                 {
+                    //we need the hoverShape now, set to active so we can see it
+                    hoverShape.SetActive(true);
+
                     //the color of the hoverShape is yellow to preview a freeform placement
                     changeHoverColor(1);
 
@@ -59,6 +65,9 @@ public class HoverScript : MonoBehaviour
                 else
                 {
                     //else if it hits a gameObject that's not the base
+
+                    //we need the hoverShape now, set to active so we can see it
+                    hoverShape.SetActive(true);
 
                     // the color of the hoverShape is green to represent a fixed placement on a generated shape
                     changeHoverColor(2);
@@ -94,8 +103,10 @@ public class HoverScript : MonoBehaviour
             }
             else
             {
-                hoverShape.transform.position = new Vector3(0, 20, 0);
-                Debug.Log("No hit");
+                //make hoverShape inactive, it is no longer needed
+                hoverShape.SetActive(false);
+                //hoverShape.transform.position = new Vector3(0, 20, 0);
+                //Debug.Log("No hit");
             }
 
         #endregion

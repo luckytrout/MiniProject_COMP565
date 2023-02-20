@@ -38,6 +38,7 @@ public class MainScript : MonoBehaviour
     {
 
         //do Input.GetMouseButton(0) for fun
+        // on the mouse left click going up
         if (Input.GetMouseButtonUp(0))
         {
             //2D to 3D coordinates
@@ -105,6 +106,37 @@ public class MainScript : MonoBehaviour
                         shape.transform.position = new Vector3(hitInfo.transform.position.x, hitInfo.point.y - (0.5f), hitInfo.transform.position.z);
                     }
                     #endregion
+                }
+            }
+            else
+            {
+                Debug.Log("No hit");
+            }
+            #endregion
+        }
+
+
+        // on mouse right click going up
+        if (Input.GetMouseButtonUp(1))
+        {
+            //2D to 3D coordinates
+            #region Screen To World
+
+            //hitInfo is information gathered from a raycast
+            RaycastHit hitInfo = new RaycastHit();
+
+            //hit is false when referenced object is not hit, otherwise true
+            bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
+            if (hit)
+            {
+               
+                if (hitInfo.transform.name.Equals("Base"))
+                {
+                    return;
+                }
+                else
+                {
+                    Destroy(hitInfo.transform.gameObject);
                 }
             }
             else
