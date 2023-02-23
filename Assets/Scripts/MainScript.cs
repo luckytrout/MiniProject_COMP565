@@ -1,5 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+//using System.Collections;
+//using System.Collections.Generic;
 using UnityEngine;
 
 public class MainScript : MonoBehaviour
@@ -23,8 +23,6 @@ public class MainScript : MonoBehaviour
         // look for ScriptManager and get HoverScript that is attached
         // need this for specific interactions
         hoverScript = GameObject.FindGameObjectWithTag("ScriptManager").GetComponent<HoverScript>();
-
-        Debug.Log("Hello World!");
 
         //set default shape to Cube
         changeToCube();
@@ -60,13 +58,19 @@ public class MainScript : MonoBehaviour
                 shape.GetComponent<MeshRenderer>().material = selectedTexture;
 
                 //adds a box-shaped collider/hitbox to generated shape
-                shape.AddComponent<BoxCollider>();
+                //shape.AddComponent<BoxCollider>();
+                if(shape.GetComponent<BoxCollider>() != true){
+                    shape.AddComponent<BoxCollider>();
+                }
+
                 shape.GetComponent<BoxCollider>().isTrigger = true;
                 
                 //create name to distinguish it
                 //cube.name = string.Format("MyCube[0]", index.ToString()); //original code
                 shape.name = string.Format("Shape[" + index + "]", index.ToString());
                 index++;
+
+                shape.AddComponent<ExplosionScript>();
 
                 //adds a rigidbody to generated shape so that it can be affected by physics
                 //shape.AddComponent<Rigidbody>();
@@ -127,7 +131,7 @@ public class MainScript : MonoBehaviour
 
             //hit is false when referenced object is not hit, otherwise true
             bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
-            if (hit)
+            if (hit && hitInfo.transform.tag != "Shrapnel")
             {
                
                 if (hitInfo.transform.name.Equals("Base"))
@@ -136,7 +140,8 @@ public class MainScript : MonoBehaviour
                 }
                 else
                 {
-                    Destroy(hitInfo.transform.gameObject);
+                     StartCoroutine(hitInfo.transform.gameObject.GetComponent<ExplosionScript>().SplitMesh(true));
+                    //Destroy(hitInfo.transform.gameObject);
                 }
             }
             else

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Base
   - ScriptManager
+  - Shrapnel
   layers:
   - Default
   - TransparentFX

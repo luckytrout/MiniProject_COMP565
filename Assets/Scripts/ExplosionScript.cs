@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
-using System;
+//using System.Collections.Generic;
+//using System;
  
 public class ExplosionScript : MonoBehaviour
 {
@@ -68,6 +68,7 @@ public class ExplosionScript : MonoBehaviour
  
                 GameObject GO = new GameObject("Triangle " + (i / 3));
                 //GO.layer = LayerMask.NameToLayer("Particle");
+                GO.tag = "Shrapnel";
                 GO.transform.position = transform.position;
                 GO.transform.rotation = transform.rotation;
                 GO.AddComponent<MeshRenderer>().material = materials[submesh];
@@ -95,10 +96,11 @@ public class ExplosionScript : MonoBehaviour
             return;
  
         collision.transform.GetComponent<Renderer>().material.color = Color.red;
-        Debug.Log(collision.transform.name);
+        /*Debug.Log(collision.transform.name);
  
         foreach (var cp in collision.contacts)
             Debug.Log(cp.point);
+            */
     }
  
     private void OnCollisionExit(Collision collision)
